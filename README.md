@@ -1,24 +1,5 @@
-# ssr-test
+# Ghost Theme Vue
 
-## Project setup
-```
-yarn install
-```
+该脚手架实现在 `Ghost` 博客下生成 `Vue` 主题，并且拥有良好的 `seo` 支持。
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+> 注意：本项目目前处于测试阶段，请勿在线上使用！

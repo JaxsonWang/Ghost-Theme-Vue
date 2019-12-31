@@ -24,5 +24,15 @@ module.exports = {
     } else {
       // 为开发环境修改配置.
     }
+  },
+  chainWebpack: config => {
+    config
+      .plugin('html')
+      .tap(args => {
+        args[0].header = '{{ ghost_head }}'
+        args[0].footer = '{{ ghost_foot }}'
+        // more options: https://github.com/jantimon/html-webpack-plugin#minification
+        return args
+      })
   }
 }
