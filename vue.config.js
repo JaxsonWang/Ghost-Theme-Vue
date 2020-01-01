@@ -1,5 +1,6 @@
 'use strict'
 const path = require('path')
+const settings = require('./build/settings')
 
 const resolve = dir => {
   return path.join(__dirname, dir)
@@ -29,10 +30,24 @@ module.exports = {
     config
       .plugin('html')
       .tap(args => {
-        args[0].header = '{{ ghost_head }}'
-        args[0].footer = '{{ ghost_foot }}'
+        args[0].header = '{{ghost_head}}'
+        args[0].footer = '{{ghost_foot}}'
         // more options: https://github.com/jantimon/html-webpack-plugin#minification
         return args
       })
+  },
+  // more pwa options: https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa
+  pwa: {
+    name: settings.title,
+    themeColor: '#4DBA87',
+    msTileColor: '#000000',
+    appleMobileWebAppCapable: 'yes',
+    appleMobileWebAppStatusBarStyle: 'black',
+    workboxOptions: {
+      exclude: [
+        'index.html',
+        'package.json'
+      ]
+    }
   }
 }

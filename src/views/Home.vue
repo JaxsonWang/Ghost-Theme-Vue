@@ -6,7 +6,17 @@
 </template>
 
 <script>
+import {getPosts} from '@/api/ghost-index'
+
 export default {
-  name: 'Home'
+  name: 'Home',
+  async created() {
+    console.log(await this.getData())
+  },
+  methods: {
+    async getData() {
+      return await getPosts()
+    }
+  }
 }
 </script>
