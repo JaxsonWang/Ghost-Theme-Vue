@@ -1,3 +1,4 @@
+'use strict'
 const fs = require('fs')
 const settings = require('../vue.config')
 const ghost = require('../ghost/hbs-template')
@@ -23,20 +24,8 @@ const modifyFile = (inFile, outFile, modify) => {
   })
 }
 
-/**
- * 复制文件
- * @param src 源文件
- * @param dist 复制文件
- */
-const copyFile = (src, dist) => {
-  // 复制文件
-  fs.createReadStream(src).pipe(fs.createWriteStream(dist))
-  // 读取文件 - index/post
-  modifyFile('index.hbs', 'index.hbs', ghost.index)
-  modifyFile('post.hbs', 'post.hbs', ghost.post)
-}
+modifyFile('index.html', 'index.hbs', ghost.index)
+modifyFile('index.html', 'post.hbs', ghost.post)
 
-copyFile(
-  `./${settings.outputDir}/index.hbs`,
-  `./${settings.outputDir}/post.hbs`
-)
+// 删除文件
+fs.unlinkSync(`./${settings.outputDir}/index.html`)

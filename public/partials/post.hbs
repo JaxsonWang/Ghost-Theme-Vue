@@ -1,0 +1,25 @@
+{{#post}}
+  <section class="article-header">
+    <img src="{{img_url feature_image size='xl'}}" alt="article image"/>
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="post-full-title">{{title}}</h1>
+        <section class="post-full-meta">
+          {{#primary_tag}}
+            <span class="date-divider">/</span>
+            <a href="{{url}}">{{name}}</a>
+          {{/primary_tag}}
+        </section>
+      </div>
+    </div>
+  </section>
+  <main class="site-main container">
+    <div class="inner row">
+      <article>
+        <section class="post-content">
+          {{content}}
+        </section>
+      </article>
+    </div>
+  </main>
+{{/post}}

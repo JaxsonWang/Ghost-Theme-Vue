@@ -1,7 +1,7 @@
 {
   "name": "ghost-theme-vue",
   "version": "0.1.0",
-  "license": "GNU General Public License Version 3 or later",
+  "license": "AGPL-3.0-or-later",
   "scripts": {
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build && node build/build.js",
@@ -26,8 +26,8 @@
     "babel-eslint": "^10.0.3",
     "chalk": "^3.0.0",
     "connect": "^3.7.0",
-    "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.0.0",
+    "eslint": "6.8.0",
+    "eslint-plugin-vue": "6.1.2",
     "runjs": "^4.4.2",
     "sass": "^1.23.7",
     "sass-loader": "^8.0.0",

@@ -8,8 +8,7 @@
     <%= process.env.NODE_ENV === 'production' ? htmlWebpackPlugin.options.header : '' %>
   </head>
   <body>
-    <noscript>
-    </noscript>
+    <noscript></noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
     <%= process.env.NODE_ENV === 'production' ? htmlWebpackPlugin.options.footer : '' %>

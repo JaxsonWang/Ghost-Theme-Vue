@@ -1,3 +1,4 @@
+'use strict'
 const { run } = require('runjs')
 const chalk = require('chalk')
 const config = require('../vue.config.js')

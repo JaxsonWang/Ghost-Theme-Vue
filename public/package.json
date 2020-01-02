@@ -5,7 +5,7 @@
   "engines": {
     "ghost-api": "v3"
   },
-  "license": "GNU General Public License Version 3 or later",
+  "license": "AGPL-3.0-or-later",
   "author": {
     "name": "Jaxson Wang",
     "email": "i@iiong.com"
