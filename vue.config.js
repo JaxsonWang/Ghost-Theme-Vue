@@ -1,6 +1,6 @@
 'use strict'
 const path = require('path')
-const themeConfig = require('./theme.config')
+const themeConfig = require('./src/theme.config')
 
 const resolve = dir => {
   return path.join(__dirname, dir)

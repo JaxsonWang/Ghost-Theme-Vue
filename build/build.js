@@ -1,7 +1,7 @@
 'use strict'
 const fs = require('fs')
 const vueConfig = require('../vue.config')
-const themeConfig = require('../theme.config')
+const themeConfig = require('../src/theme.config')
 const ghost = require('../ghost/hbs-template')
 
 /**
@@ -39,6 +39,7 @@ const modifyPackage = (file) => {
     result.name = themeConfig.title
     result.description = themeConfig.description
     result.version = themeConfig.version
+    result.config = themeConfig.config
     fs.writeFile(`./${vueConfig.outputDir}/${file}`, JSON.stringify(result), 'utf8', (err) => {
       if (err) {
         throw err
