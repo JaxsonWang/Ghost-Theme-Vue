@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-import '@/styles/index.scss' // global css
+import '@/styles/index.less' // global css
 
 import App from './App.vue'
 

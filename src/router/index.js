@@ -1,6 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
 Vue.use(VueRouter)
 
 /* Layout */
@@ -20,7 +25,19 @@ const routes = [
     }]
   },
   {
-    path: '/:page_id/',
+    path: '/tag/:tag/',
+    component: Layout,
+    children: [{
+      path: '',
+      name: 'Page',
+      component: () => import('@/views/Tag'),
+      meta: {
+        title: '详细页'
+      }
+    }]
+  },
+  {
+    path: '/:page/',
     component: Layout,
     children: [{
       path: '',

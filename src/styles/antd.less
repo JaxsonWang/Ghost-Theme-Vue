@@ -1,0 +1,20 @@
+@import "~ant-design-vue/lib/style/index";
+
+.container {
+  width: 100%;
+  margin: auto;
+}
+
+.make-container(@minWidth, @breakpoint) {
+  @media (min-width: @minWidth) {
+    .container {
+      max-width: @breakpoint;
+    }
+  }
+}
+
+.make-container(@screen-xs-min, @screen-xs);
+.make-container(@screen-sm-min, @screen-sm);
+.make-container(@screen-md-min, @screen-md);
+.make-container(@screen-lg-min, @screen-lg);
+.make-container(@screen-xl-min, @screen-xl);

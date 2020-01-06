@@ -13,7 +13,7 @@ const mutations = {
 const actions = {
   getSetting({commit, state}) {
     return new Promise((resolve, reject) => {
-      getSettings(state.token).then(response => {
+      getSettings().then(response => {
         const data = response
         console.log(data)
         commit('SET_SETTINGS', data)

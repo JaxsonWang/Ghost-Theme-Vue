@@ -11,7 +11,7 @@
         >
         <a-skeleton :loading="loading" active avatar>
           <a-list-item-meta :description="item.custom_excerpt">
-            <router-link slot="title" :to="`/${item.slug}/`">{{ item.title }}</router-link>
+            <a slot="title" :href="`/${item.slug}/`">{{ item.title }}</a>
             <a-avatar slot="avatar" :src="item.primary_author.profile_image" />
           </a-list-item-meta>
           {{ item.content }}
@@ -31,7 +31,7 @@
 
 <script>
 import {List, Skeleton, Avatar, Pagination} from 'ant-design-vue'
-import {getPostsList} from '@/api/ghost/post'
+import {getTagsPostsList} from '@/api/ghost/post'
 
 export default {
   name: 'Home',
@@ -59,7 +59,7 @@ export default {
     getData(page) {
       const self = this
       self.loading = true
-      getPostsList(page).then(response => {
+      getTagsPostsList(page, self.$route.params.tag).then(response => {
         self.postList = response
         self.pagination = response.meta.pagination
         self.loading = false
