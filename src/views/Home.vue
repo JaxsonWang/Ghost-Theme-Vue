@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import {getPosts} from '@/api/ghost-index'
+import {getPostsList} from '@/api/ghost/post'
 
 export default {
   name: 'Home',
@@ -15,7 +15,7 @@ export default {
   },
   methods: {
     async getData() {
-      return await getPosts()
+      return await getPostsList()
     }
   }
 }
