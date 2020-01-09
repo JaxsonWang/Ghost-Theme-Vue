@@ -1,52 +1,51 @@
-import api from '@/utils/ghost'
+import request from '@/utils/request'
 import config from '@/theme.config'
 
-export const getPostsList = (page) => {
-  return api.posts
-    .browse({
-      include: 'authors,tags',
-      formats: 'html,plaintext',
+export const getPostsList = (currentPage) => {
+  return request({
+    url: '/content/posts/',
+    method: 'get',
+    params: {
       limit: config.config.posts_per_page,
-      page: page
-    })
-    .catch(err => {
-      console.error(err)
-    })
+      page: currentPage,
+      include: 'tags,authors'
+    }
+  })
 }
 
 export const getTagsPostsList = (page, slug) => {
-  return api.posts
-    .browse({
+  return request({
+    url: '/content/posts/',
+    method: 'get',
+    params: {
       filter: `tag:${slug}`,
       include: 'authors,tags',
       formats: 'html,plaintext',
       limit: config.config.posts_per_page,
       page: page
-    })
-    .catch(err => {
-      console.error(err)
-    })
+    }
+  })
 }
 
 export const getPostData = (slug) => {
-  return api.posts
-    .read({
-      slug: slug,
-      formats: 'html,plaintext'
-    })
-    .catch(err => {
-      console.error(err)
-    })
+  return request({
+    url: `/content/posts/slug/${slug}/`,
+    method: 'get',
+    params: {
+      formats: 'html,plaintext',
+      include: 'authors,tags'
+    }
+  })
 }
 
 export const getPageData = (slug) => {
-  return api.pages
-    .read({
-      slug: slug,
+  return request({
+    url: `/content/pages/slug/${slug}/`,
+    method: 'get',
+    params: {
       formats: 'html,plaintext',
+      include: 'authors,tags',
       fields: ['title']
-    })
-    .catch(err => {
-      console.error(err)
-    })
+    }
+  })
 }

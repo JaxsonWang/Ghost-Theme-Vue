@@ -14,8 +14,7 @@ const actions = {
   getSetting({commit, state}) {
     return new Promise((resolve, reject) => {
       getSettings().then(response => {
-        const data = response
-        console.log(data)
+        const data = response.settings
         commit('SET_SETTINGS', data)
         resolve(data)
       }).catch(error => {

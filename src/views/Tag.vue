@@ -60,7 +60,7 @@ export default {
       const self = this
       self.loading = true
       getTagsPostsList(page, self.$route.params.tag).then(response => {
-        self.postList = response
+        self.postList = response.posts
         self.pagination = response.meta.pagination
         self.loading = false
       })

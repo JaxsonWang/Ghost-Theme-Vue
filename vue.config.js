@@ -16,7 +16,7 @@ module.exports = {
   configureWebpack: config => {
     // provide the app's title in webpack's name field, so that
     // it can be accessed in index.html to inject the correct title.
-    config.name = themeConfig.title
+    config.name = `${themeConfig.blogTitle} - ${themeConfig.blogSubtitle}`
     config.resolve.alias['@'] = resolve('src')
     if (process.env.NODE_ENV === 'production') {
       // 为生产环境修改配置
@@ -51,7 +51,7 @@ module.exports = {
   },
   // more pwa options: https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa
   pwa: {
-    name: themeConfig.title,
+    name: `${themeConfig.blogTitle} - ${themeConfig.blogSubtitle}`,
     themeColor: '#4DBA87',
     msTileColor: '#000000',
     appleMobileWebAppCapable: 'yes',
