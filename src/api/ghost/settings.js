@@ -1,9 +1,8 @@
-import api from '@/utils/ghost'
+import request from '@/utils/request'
 
-export const getSettings = async() => {
-  return await api.settings
-    .browse()
-    .catch(err => {
-      console.error(err)
-    })
+export const getSettings = () => {
+  return request({
+    url: '/settings/',
+    method: 'get'
+  })
 }
