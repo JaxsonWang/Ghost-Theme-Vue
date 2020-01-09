@@ -3,7 +3,7 @@ import config from '@/theme.config'
 
 export const getPostsList = (currentPage) => {
   return request({
-    url: '/content/posts/',
+    url: '/posts/',
     method: 'get',
     params: {
       limit: config.config.posts_per_page,
@@ -15,7 +15,7 @@ export const getPostsList = (currentPage) => {
 
 export const getTagsPostsList = (page, slug) => {
   return request({
-    url: '/content/posts/',
+    url: '/posts/',
     method: 'get',
     params: {
       filter: `tag:${slug}`,
@@ -29,7 +29,7 @@ export const getTagsPostsList = (page, slug) => {
 
 export const getPostData = (slug) => {
   return request({
-    url: `/content/posts/slug/${slug}/`,
+    url: `/posts/slug/${slug}/`,
     method: 'get',
     params: {
       formats: 'html,plaintext',
@@ -40,7 +40,7 @@ export const getPostData = (slug) => {
 
 export const getPageData = (slug) => {
   return request({
-    url: `/content/pages/slug/${slug}/`,
+    url: `/pages/slug/${slug}/`,
     method: 'get',
     params: {
       formats: 'html,plaintext',

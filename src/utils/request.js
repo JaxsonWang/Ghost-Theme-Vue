@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {Message} from 'ant-design-vue'
 
-const apiPrefix = '/ghost/api/v3'
+const apiPrefix = '/ghost/api/v3/content'
 
 const service = axios.create({
   baseURL: process.env.VUE_APP_CONTENT_API_URL + apiPrefix,
