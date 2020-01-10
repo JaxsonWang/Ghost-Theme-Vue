@@ -47,7 +47,24 @@ export default {
     return {
       loading: true,
       postList: [],
-      pagination: {}
+      pagination: {},
+      feature_image: {
+        width: 0,
+        height: 0
+      }
+    }
+  },
+  watch: {
+    '$store.getters.settings.cover_image': {
+      handler(value) {
+        const self = this
+        const image = new Image()
+        image.src = value
+        self.feature_image.width = image.width
+        self.feature_image.height = image.height
+      },
+      immediate: true,
+      deep: false
     }
   },
   metaInfo() {
@@ -62,8 +79,8 @@ export default {
         {vmid: 'og:description', property: 'og:description', content: self.$store.getters.settings.meta_description},
         {vmid: 'og:url', property: 'og:url', content: self.$store.getters.settings.url},
         {vmid: 'og:image', property: 'og:image', content: self.$store.getters.settings.og_image},
-        {vmid: 'og:image:width', property: 'og:image:width', content: '4032'},
-        {vmid: 'og:image:height', property: 'og:image:height', content: '3024'},
+        {vmid: 'og:image:width', property: 'og:image:width', content: self.feature_image.width},
+        {vmid: 'og:image:height', property: 'og:image:height', content: self.feature_image.height},
         {vmid: 'twitter:card', name: 'twitter:card', content: 'summary_large_image'},
         {vmid: 'twitter:title', name: 'twitter:title', content: self.$store.getters.settings.twitter_title},
         {vmid: 'twitter:description', name: 'twitter:description', content: self.$store.getters.settings.twitter_description},
@@ -78,6 +95,7 @@ export default {
     this.getData(1)
   },
   mounted() {
+    // console.log(this.$store.state.settings.settings)
   },
   methods: {
     getData(page) {
