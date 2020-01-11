@@ -28,7 +28,6 @@ const modifyFile = (inFile, outFile) => {
 
 if (process.env.npm_config_preview || rawArgv.includes('--preview')) {
   const report = rawArgv.includes('--report')
-  console.log(rawArgv)
 
   run(`vue-cli-service build ${args}`)
 
@@ -51,9 +50,9 @@ if (process.env.npm_config_preview || rawArgv.includes('--preview')) {
   )
 
   app.listen(port, function () {
-    console.log(chalk.green(`> Preview at  http://localhost:${port}${publicPath}`))
+    console.log(`> Preview at  http://localhost:${port}${publicPath}`)
     if (report) {
-      console.log(chalk.green(`> Report at  http://localhost:${port}${publicPath}report.html`))
+      console.log(`> Report at  http://localhost:${port}${publicPath}report.html`)
     }
   })
 } else {
