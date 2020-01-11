@@ -23,13 +23,15 @@ Use Vue-Cli to generate ghost theme.
 ### 开发
 
 ```bash
-npm run dev # 开发环境
+yarn install # 安装依赖
 
-npm run build:ghost # 编译 Ghost 主题模板，打包 zip 上传即可
+yarn run dev # 开发环境
 
-npm run preview # 主题打包环境检测
+yarn run build:ghost # 编译 Ghost 主题模板，打包 zip 上传即可
 
-npm run lint # 语法检查
+yarn run preview # 主题打包环境检测
+
+yarn run lint # 语法检查
 ```
 
 未完待续
