@@ -4,8 +4,8 @@
   "license": "AGPL-3.0-or-later",
   "scripts": {
     "dev": "vue-cli-service serve",
-    "build": "vue-cli-service build && node build/build.js",
-    "preview": "node build/index.js --preview",
+    "build:ghost": "vue-cli-service build && node build/build.js",
+    "preview": "node build/index.js --preview --report",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
