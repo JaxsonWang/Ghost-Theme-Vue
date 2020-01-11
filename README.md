@@ -1,5 +1,7 @@
 # Ghost Theme Vue
 
-该脚手架实现在 `Ghost` 博客下生成 `Vue` 主题，并且拥有良好的 `seo` 支持。
+这是一份简单的编写主题实例。
 
-> 注意：本项目目前处于测试阶段，请勿在线上使用！
+```bash
+npm run build:ghost
+```

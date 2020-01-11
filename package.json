@@ -4,8 +4,8 @@
   "license": "AGPL-3.0-or-later",
   "scripts": {
     "dev": "vue-cli-service serve",
-    "build": "vue-cli-service build && node build/build.js",
-    "preview": "node build/index.js --preview",
+    "build:ghost": "vue-cli-service build && node build/build.js",
+    "preview": "node build/index.js --preview --report",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -28,7 +28,6 @@
     "@vue/cli-service": "^4.1.0",
     "babel-eslint": "^10.0.3",
     "babel-plugin-import": "^1.13.0",
-    "chalk": "^3.0.0",
     "connect": "^3.7.0",
     "eslint": "6.8.0",
     "eslint-plugin-vue": "6.1.2",
