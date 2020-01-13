@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 import {Layout, Drawer} from 'ant-design-vue'
 import {mixin, mixinDevice} from '@/utils/mixin'
 import GlobalHeader from '@/components/GlobalHeader'
@@ -81,6 +82,7 @@ export default {
     console.log(this.navTheme)
   },
   methods: {
+    ...mapActions(['setSidebar']),
     contentPaddingLeft() {
       if (!this.fixSidebar || this.isMobile()) {
         return '0'
