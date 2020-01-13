@@ -1,126 +1,107 @@
 <template>
-  <div class="app-wrapper">
-    <div class="container main-container">
-      <a-row>
-        <a-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6">
-          <div class="site-header">
-            <div class="site-header-title">
-              <router-link to="/">淮城一只猫</router-link>
-            </div>
-            <div class="site-header-description">永远年轻，永远热泪盈眶！</div>
-            <a-menu
-              class="site-header-menu"
-              theme="light"
-            >
-              <a-menu-item
-                v-for="(item, index) in menuList"
-                :key="index"
-                :to="item.url"
-                :subl="item.url"
-                @click="onMenuClick"
-              >
-                {{ item.label }}
-              </a-menu-item>
-            </a-menu>
-          </div>
-        </a-col>
-        <a-col :xs="24" :sm="24" :md="18" :lg="18" :xl="18">
+  <a-layout :class="['layout', device]">
+    <!-- SideMenu -->
+    <a-drawer
+      v-if="isMobile()"
+      placement="left"
+      :wrap-class-name="`drawer-sider ${navTheme}`"
+      :closable="false"
+      :visible="collapsed"
+      @close="drawerClose"
+    >
+      <side-menu
+        mode="inline"
+        :menus="menus"
+        :theme="navTheme"
+        :collapsed="false"
+        :collapsible="true"
+        @menuSelect="menuSelect"
+      />
+    </a-drawer>
+
+    <a-layout
+      :class="[layoutMode, `content-width-${contentWidth}`]"
+      :style="{paddingLeft: contentPaddingLeft}"
+    >
+      <global-header
+        :mode="layoutMode"
+        :menus="menus"
+        :theme="navTheme"
+        :collapsed="collapsed"
+        :device="device"
+        @toggle="toggle"
+      />
+      <!-- layout content -->
+      <a-layout-content
+        :style="{ height: '100%', margin: '24px 24px 0', paddingTop: fixedHeader ? '64px' : '0' }"
+      >
+        <transition name="page-transition">
           <app-main />
-        </a-col>
-      </a-row>
-    </div>
-  </div>
+        </transition>
+      </a-layout-content>
+      <a-layout-content />
+      <a-layout-header />
+      <a-layout-footer />
+    </a-layout>
+  </a-layout>
 </template>
 
 <script>
-import {Row, Col, Menu} from 'ant-design-vue'
-import {AppMain} from './components'
-import {isTagLink} from '@/utils/validate'
+import {Layout, Drawer} from 'ant-design-vue'
+import {mixin, mixinDevice} from '@/utils/mixin'
+import GlobalHeader from '@/components/GlobalHeader'
+import SideMenu from '@/components/Menu/SideMenu'
+import {AppMain} from '@/layout/components'
+
+import {triggerWindowResizeEvent} from '@/utils/util'
 
 export default {
   name: 'Layout',
   components: {
+    'a-layout': Layout,
+    'a-drawer': Drawer,
+    'a-layout-header': Layout.Header,
+    'a-layout-content': Layout.Content,
+    'a-layout-footer': Layout.Footer,
+    GlobalHeader,
     AppMain,
-    'a-row': Row,
-    'a-col': Col,
-    'a-menu': Menu,
-    'a-menu-item': Menu.Item
+    SideMenu
   },
+  mixins: [mixin, mixinDevice],
   data() {
     return {
+      collapsed: false,
+      menus: []
     }
   },
   computed: {
-    menuList() {
-      return this.$store.getters.settings.navigation
-    }
+  },
+  mounted() {
+    this.$store.commit('TOGGLE_THEME', 'light')
+    console.log(this.navTheme)
   },
   methods: {
-    onMenuClick({item}) {
-      if (isTagLink(item.$attrs.to)) {
-        this.$router.push(item.$attrs.to)
-      } else {
-        this.$router.push({
-          path: item.$attrs.to,
-          query: {isPage: true}
-        })
+    contentPaddingLeft() {
+      if (!this.fixSidebar || this.isMobile()) {
+        return '0'
       }
+      if (this.sidebarOpened) {
+        return '256px'
+      }
+      return '80px'
+    },
+    toggle() {
+      this.collapsed = !this.collapsed
+      this.setSidebar(!this.collapsed)
+      triggerWindowResizeEvent()
+    },
+    menuSelect() {
+    },
+    drawerClose() {
+      this.collapsed = false
     }
   }
 }
 </script>
 <style lang="less" scoped>
-.main-container {
-  padding: 1rem 0;
-  .site {
-    &-header {
-      position: relative;
-      padding-top: 2rem;
-      &-title {
-        position: relative;
-        padding-bottom: 1.5rem;
-        margin-bottom: 1.5rem;
-        a {
-          font-size: 1.5rem;
-        }
-        &::after {
-          position: absolute;
-          right: 0;
-          bottom: 0;
-          left: 0;
-          height: 1px;
-          width: 50%;
-          content: '';
-          background-color: #c8c7cc;
-          transform: scaleY(.5);
-        }
-      }
-      &-description {
-        position: relative;
-        padding-bottom: 1.5rem;
-        margin-bottom: 1.5rem;
-        &::after {
-          position: absolute;
-          right: 0;
-          bottom: 0;
-          left: 0;
-          height: 1px;
-          width: 40%;
-          content: '';
-          background-color: #c8c7cc;
-          transform: scaleY(.5);
-        }
-      }
-      &-menu {
-        border-right: none;
-        .ant-menu-item-selected {
-          background-color: initial;
-          &::after {
-            opacity: 0
-          }
-        }
-      }
-    }
-  }
-}
 </style>
