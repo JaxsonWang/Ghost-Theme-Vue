@@ -6,11 +6,7 @@
         :class="[fixedHeader && 'ant-header-fixedHeader', sidebarOpened ? 'ant-header-side-opened' : 'ant-header-side-closed', ]"
         :style="{ padding: '0' }"
       >
-        <div v-if="mode === 'sidemenu'" class="header">
-          <a-icon v-if="device==='mobile'" class="trigger" :type="collapsed ? 'menu-fold' : 'menu-unfold'" @click="toggle" />
-          <a-icon v-else class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="toggle" />
-        </div>
-        <div v-else :class="['top-nav-header-index', theme]">
+        <div :class="['top-nav-header-index', theme]">
           <div class="header-index-wide container">
             <div class="header-index-left">
               <logo class="top-nav-header" :show-title="device !== 'mobile'" />
@@ -40,11 +36,6 @@ export default {
   },
   mixins: [mixin],
   props: {
-    mode: {
-      type: String,
-      // sidemenu, topmenu
-      default: 'topmenu'
-    },
     theme: {
       type: String,
       required: false,
@@ -108,7 +99,7 @@ export default {
 </script>
 
 <style lang="less">
-@import '../index.less';
+@import '../../styles/antd';
 
 .header-animat{
   position: relative;

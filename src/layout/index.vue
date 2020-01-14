@@ -29,14 +29,12 @@
       />
       <!-- layout content -->
       <a-layout-content
-        :style="{ height: '100%', margin: '24px 24px 0', paddingTop: fixedHeader ? '64px' : '0' }"
+        :style="{ paddingTop: fixedHeader ? '64px' : '0' }"
       >
         <transition name="page-transition">
           <app-main />
         </transition>
       </a-layout-content>
-      <a-layout-content />
-      <a-layout-header />
       <a-layout-footer />
     </a-layout>
   </a-layout>
@@ -57,7 +55,6 @@ export default {
   components: {
     'a-layout': Layout,
     'a-drawer': Drawer,
-    'a-layout-header': Layout.Header,
     'a-layout-content': Layout.Content,
     'a-layout-footer': Layout.Footer,
     GlobalHeader,
@@ -71,10 +68,6 @@ export default {
     }
   },
   computed: {
-  },
-  mounted() {
-    this.$store.commit('TOGGLE_THEME', 'light')
-    console.log(this.navTheme)
   },
   methods: {
     ...mapActions(['setSidebar']),
@@ -99,4 +92,26 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+/*
+ * The following styles are auto-applied to elements with
+ * transition="page-transition" when their visibility is toggled
+ * by Vue.js.
+ *
+ * You can easily play with the page transition by editing
+ * these styles.
+ */
+
+.page-transition-enter {
+  opacity: 0;
+}
+
+.page-transition-leave-active {
+  opacity: 0;
+}
+
+.page-transition-enter .page-transition-container,
+.page-transition-leave-active .page-transition-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
 </style>

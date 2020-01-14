@@ -35,6 +35,11 @@ export default {
     menuList() {
       return this.$store.getters.settings.navigation
     }
+  },
+  watch: {
+    $route: (value) => {
+      console.log(value)
+    }
   }
 }
 </script>

@@ -32,7 +32,7 @@ service.interceptors.response.use(
   },
   error => {
     console.log('err' + error)
-    Message.error(error.message || 'Error', 5000)
+    Message.error(error.message || 'Error', 5)
     return Promise.reject(error)
   }
 )

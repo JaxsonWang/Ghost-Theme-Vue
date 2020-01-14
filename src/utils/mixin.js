@@ -20,14 +20,6 @@ const mixin = {
       sidebarOpened: state => state.app.sidebar,
       multiTab: state => state.app.multiTab
     })
-  },
-  methods: {
-    isTopMenu() {
-      return this.layoutMode === 'topmenu'
-    },
-    isSideMenu() {
-      return !this.isTopMenu()
-    }
   }
 }
 

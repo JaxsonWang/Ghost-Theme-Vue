@@ -2,8 +2,7 @@ import Vue from 'vue'
 import VueMeta from 'vue-meta'
 import VueStorage from 'vue-ls'
 
-import '@/styles/index.less' // global css
-import '@/components/global.less'
+import '@/styles/index.less'
 
 import App from '@/App.vue'
 import router from '@/router'
