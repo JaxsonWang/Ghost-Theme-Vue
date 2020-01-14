@@ -1,6 +1,7 @@
 <template>
   <div class="logo">
     <router-link to="/">
+      <svg-icon icon-class="logo" />
       <h1 v-if="showTitle">{{ title }}</h1>
     </router-link>
   </div>

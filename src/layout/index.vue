@@ -10,12 +10,9 @@
       @close="drawerClose"
     >
       <side-menu
-        mode="inline"
-        :menus="menus"
         :theme="navTheme"
         :collapsed="false"
         :collapsible="true"
-        @menuSelect="menuSelect"
       />
     </a-drawer>
 
@@ -25,7 +22,6 @@
     >
       <global-header
         :mode="layoutMode"
-        :menus="menus"
         :theme="navTheme"
         :collapsed="collapsed"
         :device="device"
@@ -71,8 +67,7 @@ export default {
   mixins: [mixin, mixinDevice],
   data() {
     return {
-      collapsed: false,
-      menus: []
+      collapsed: false
     }
   },
   computed: {
@@ -96,8 +91,6 @@ export default {
       this.collapsed = !this.collapsed
       this.setSidebar(!this.collapsed)
       triggerWindowResizeEvent()
-    },
-    menuSelect() {
     },
     drawerClose() {
       this.collapsed = false

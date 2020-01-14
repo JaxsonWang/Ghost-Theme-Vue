@@ -25,6 +25,7 @@ module.exports = {
     }
   },
   chainWebpack: config => {
+    // set ghost hbs
     config
       .plugin('html')
       .tap(args => {
@@ -33,6 +34,23 @@ module.exports = {
         // more options: https://github.com/jantimon/html-webpack-plugin#minification
         return args
       })
+
+    // set svg-sprite-loader
+    config.module
+      .rule('svg')
+      .exclude.add(resolve('src/icons'))
+      .end()
+    config.module
+      .rule('icons')
+      .test(/\.svg$/)
+      .include.add(resolve('src/icons'))
+      .end()
+      .use('svg-sprite-loader')
+      .loader('svg-sprite-loader')
+      .options({
+        symbolId: 'icon-[name]'
+      })
+      .end()
   },
   css: {
     loaderOptions: {

@@ -11,18 +11,10 @@
           <a-icon v-else class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click="toggle" />
         </div>
         <div v-else :class="['top-nav-header-index', theme]">
-          <div class="header-index-wide">
+          <div class="header-index-wide container">
             <div class="header-index-left">
               <logo class="top-nav-header" :show-title="device !== 'mobile'" />
-              <a-menu
-                v-if="device !== 'mobile'"
-                mode="horizontal"
-                :theme="theme"
-              >
-                <a-menu-item v-for="(item, index) in menuList" :key="index">
-                  <router-link :to="item.url">{{ item.label }}</router-link>
-                </a-menu-item>
-              </a-menu>
+              <s-menu v-if="device !== 'mobile'" mode="horizontal" :theme="theme" />
               <a-icon v-else class="trigger" :type="collapsed ? 'menu-fold' : 'menu-unfold'" @click="toggle" />
             </div>
           </div>
@@ -33,7 +25,8 @@
 </template>
 
 <script>
-import {Layout, Icon, Menu} from 'ant-design-vue'
+import {Layout, Icon} from 'ant-design-vue'
+import SMenu from '@/components/Menu'
 import Logo from '../tools/Logo'
 import {mixin} from '@/utils/mixin'
 
@@ -41,10 +34,9 @@ export default {
   name: 'GlobalHeader',
   components: {
     Logo,
+    SMenu,
     'a-layout-header': Layout.Header,
-    'a-icon': Icon,
-    'a-menu': Menu,
-    'a-menu-item': Menu.Item
+    'a-icon': Icon
   },
   mixins: [mixin],
   props: {
@@ -52,10 +44,6 @@ export default {
       type: String,
       // sidemenu, topmenu
       default: 'topmenu'
-    },
-    menus: {
-      type: Array,
-      required: true
     },
     theme: {
       type: String,

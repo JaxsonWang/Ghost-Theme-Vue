@@ -14,6 +14,7 @@ import config from '@/defaultSettings'
 import bootstrap from '@/core/bootstrap'
 
 import '@/initApp'
+import '@/icons'
 import '@/registerServiceWorker'
 
 Vue.use(VueMeta, {
