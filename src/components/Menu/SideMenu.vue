@@ -7,7 +7,7 @@
     width="256px"
   >
     <logo />
-    <s-menu mode="inline" :theme="theme" />
+    <s-menu mode="inline" :theme="theme" @select="onSelectMenu" />
   </a-layout-sider>
 
 </template>
@@ -17,6 +17,7 @@ import {Layout} from 'ant-design-vue'
 import SMenu from '@/components/Menu'
 import Logo from '@/components/tools/Logo'
 import {mixin, mixinDevice} from '@/utils/mixin'
+import {mapActions} from 'vuex'
 
 export default {
   name: 'SideMenu',
@@ -49,6 +50,10 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['CloseSidebar']),
+    onSelectMenu() {
+      this.CloseSidebar()
+    }
   }
 }
 </script>

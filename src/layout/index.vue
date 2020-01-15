@@ -6,7 +6,7 @@
       placement="left"
       :wrap-class-name="`drawer-sider ${navTheme}`"
       :closable="false"
-      :visible="collapsed"
+      :visible.sync="collapsed"
       @close="drawerClose"
     >
       <side-menu
@@ -62,12 +62,10 @@ export default {
     SideMenu
   },
   mixins: [mixin, mixinDevice],
-  data() {
-    return {
-      collapsed: false
-    }
-  },
   computed: {
+    collapsed() {
+      return this.sidebarOpened
+    }
   },
   methods: {
     ...mapActions(['setSidebar']),
@@ -81,12 +79,11 @@ export default {
       return '80px'
     },
     toggle() {
-      this.collapsed = !this.collapsed
       this.setSidebar(!this.collapsed)
       triggerWindowResizeEvent()
     },
     drawerClose() {
-      this.collapsed = false
+      this.setSidebar(false)
     }
   }
 }

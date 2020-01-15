@@ -1,9 +1,11 @@
 <template>
   <a-menu
+    v-model="selectedKeys"
     :mode="mode"
     :theme="theme"
+    @select="selectMenu"
   >
-    <a-menu-item v-for="(item, index) in menuList" :key="index">
+    <a-menu-item v-for="item in menuList" :key="item.url">
       <router-link :to="item.url">{{ item.label }}</router-link>
     </a-menu-item>
   </a-menu>
@@ -12,6 +14,7 @@
 <script>
 
 import {Menu} from 'ant-design-vue'
+import {mapActions} from 'vuex'
 
 export default {
   name: 'Menu',
@@ -31,14 +34,40 @@ export default {
       default: 'dark'
     }
   },
+  data() {
+    return {
+      selectedKeys: []
+    }
+  },
   computed: {
     menuList() {
       return this.$store.getters.settings.navigation
     }
   },
   watch: {
-    $route: (value) => {
-      console.log(value)
+    $route: function(value) {
+      let hasNav = false
+      const nav = this.$store.getters.settings.navigation
+      for (let i = 0; i < nav.length; i++) {
+        if (nav[i].url === value.path) {
+          hasNav = true
+          break
+        }
+      }
+      // hasNav = false 清空 this.selectedKeys
+      if (!hasNav) {
+        this.selectedKeys = []
+        this.CloseSidebar()
+      }
+    }
+  },
+  created() {
+    this.selectedKeys = [this.$route.path]
+  },
+  methods: {
+    ...mapActions(['CloseSidebar']),
+    selectMenu(item) {
+      this.$emit('select', item)
     }
   }
 }

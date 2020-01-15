@@ -14,7 +14,7 @@ import {
 
 const app = {
   state: {
-    sidebar: true,
+    sidebar: false,
     device: 'desktop',
     theme: '',
     layout: '',
