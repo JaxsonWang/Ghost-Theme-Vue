@@ -3,7 +3,7 @@
     :collapsed="false"
     :collapsible="true"
     :trigger="null"
-    :class="['sider', isDesktop() ? null : 'shadow', theme, fixSiderbar ? 'ant-fixed-sidemenu' : null ]"
+    :class="['sider', isDesktop() ? null : 'shadow', theme, 'ant-fixed-sidemenu' ]"
     width="256px"
   >
     <logo />
