@@ -3,7 +3,7 @@
     <div v-if="visible" class="header-animat">
       <a-layout-header
         v-if="visible"
-        :class="[fixedHeader && 'ant-header-fixedHeader', sidebarOpened ? 'ant-header-side-opened' : 'ant-header-side-closed', ]"
+        :class="['ant-header-fixedHeader', sidebarOpened ? 'ant-header-side-opened' : 'ant-header-side-closed', ]"
         :style="{ padding: '0' }"
       >
         <div :class="['top-nav-header-index', theme]">

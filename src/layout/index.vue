@@ -17,11 +17,11 @@
     </a-drawer>
 
     <a-layout
-      :class="[layoutMode, `content-width-${contentWidth}`]"
+      :class="[`topmenu`, `content-width-Fixed`]"
       :style="{paddingLeft: contentPaddingLeft}"
     >
       <global-header
-        :mode="layoutMode"
+        mode="topmenu"
         :theme="navTheme"
         :collapsed="collapsed"
         :device="device"
@@ -29,7 +29,7 @@
       />
       <!-- layout content -->
       <a-layout-content
-        :style="{ paddingTop: fixedHeader ? '64px' : '0' }"
+        :style="{ paddingTop: '64px' }"
       >
         <transition name="page-transition">
           <app-main />
