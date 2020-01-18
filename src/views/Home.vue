@@ -1,47 +1,91 @@
 <template>
-  <div class="home">
-    <a-list item-layout="vertical" size="large" :data-source="postList">
-      <a-list-item slot="renderItem" key="item.title" slot-scope="item">
-        <img
-          v-if="!loading"
-          slot="extra"
-          width="272"
-          alt="logo"
-          :src="item.feature_image"
-        >
-        <a-skeleton :loading="loading" active avatar>
-          <a-list-item-meta :description="item.custom_excerpt">
-            <router-link slot="title" :to="`/${item.slug}/`">{{ item.title }}</router-link>
-            <a-avatar slot="avatar" :src="item.primary_author.profile_image" />
-          </a-list-item-meta>
-          {{ item.content }}
-        </a-skeleton>
-      </a-list-item>
-    </a-list>
-    <a-pagination
-      v-if="!loading"
-      :current="pagination.page"
-      :total="pagination.total"
-      :default-page-size="pagination.limit"
-      :page-size.sync="pagination.limit"
-      @change="onPageChange"
-    />
+  <div class="site-home site-main-post">
+    <a-skeleton
+      :loading="loading"
+      active
+      :paragraph="{
+        rows: 15
+      }"
+      class="site-main-skeleton"
+    >
+      <main class="site-post-list">
+        <a-row type="flex" class="site-post-row">
+          <a-col
+            v-for="item in postList"
+            :key="item.id"
+            :xs="24"
+            :sm="24"
+            :md="24"
+            :lg="12"
+            :xl="12"
+            :xxl="12"
+            class="site-post-col"
+          >
+            <article class="site-post-article">
+              <div class="article-image">
+                <router-link :to="`/${item.slug}/`">
+                  <img :src="item.feature_image" :alt="item.title">
+                </router-link>
+              </div>
+              <div class="article-title">
+                <router-link :to="`/${item.slug}/`">{{ item.title }}</router-link>
+              </div>
+              <div class="article-excerpt">
+                <p>{{ item.custom_excerpt }}</p>
+              </div>
+              <div class="article-meta">
+                <a-row type="flex" justify="space-between">
+                  <a-col class="meta-authors">
+                    <router-link
+                      v-for="itemAuthor in item.authors"
+                      :key="itemAuthor.id"
+                      :class="['author-item', itemAuthor.id, itemAuthor.slug]"
+                      to="#"
+                    >
+                      <a-tooltip>
+                        <template slot="title">
+                          {{ itemAuthor.name }}
+                        </template>
+                        <a-avatar :src="itemAuthor.profile_image" />
+                      </a-tooltip>
+                    </router-link>
+                  </a-col>
+                  <a-col class="meta-date">
+                    {{ formatTime(new Date(item.published_at), '{y}年{m}月{d}日') }}
+                  </a-col>
+                </a-row>
+              </div>
+            </article>
+          </a-col>
+        </a-row>
+      </main>
+    </a-skeleton>
+    <div v-if="!loading" class="site-post-pagination">
+      <a-pagination
+        :current="pagination.page"
+        :total="pagination.total"
+        :default-page-size="pagination.limit"
+        :page-size.sync="pagination.limit"
+        @change="onPageChange"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import {List, Skeleton, Avatar, Pagination} from 'ant-design-vue'
+import {Row, Col, Pagination, Tooltip, Avatar, Skeleton} from 'ant-design-vue'
 import {getPostsList} from '@/api/ghost/post'
+import {formatTime} from '@/utils/util'
 
 export default {
   name: 'Home',
   components: {
+    'a-pagination': Pagination,
+    'a-row': Row,
+    'a-col': Col,
+    'a-tooltip': Tooltip,
     'a-avatar': Avatar,
-    'a-list': List,
-    'a-list-item': List.Item,
-    'a-list-item-meta': List.Item.Meta,
-    'a-skeleton': Skeleton,
-    'a-pagination': Pagination
+    'a-skeleton': Skeleton
   },
   data() {
     return {
@@ -94,10 +138,8 @@ export default {
   created() {
     this.getData(1)
   },
-  mounted() {
-    // console.log(this.$store.state.settings.settings)
-  },
   methods: {
+    formatTime,
     getData(page) {
       const self = this
       self.loading = true
@@ -113,3 +155,56 @@ export default {
   }
 }
 </script>
+<style lang="less" scoped>
+.site-main-post {
+  background-color: #fff;
+  .site-post-list {
+    padding-top: 3rem;
+    .site-post-article {
+      margin: 0 15% 2.75rem;
+      .article-image {
+        overflow: hidden;
+        transition: transform 250ms ease-in-out;
+        &:hover {
+          transform: scale(0.95);
+          transition: transform 200ms ease-in-out 0ms;
+        }
+        img {
+          width: 100%;
+          transition: transform 250ms ease-in-out;
+          &:hover {
+            transform: scale(1.25);
+            transition: transform 200ms ease-in-out 0ms;
+          }
+        }
+      }
+      .article-title {
+        font-size: 1.25rem;
+        a {
+          color: #000;
+        }
+      }
+      .article-excerpt {
+        p {
+          font-size: 1rem;
+        }
+      }
+      .article-meta {
+        .meta-date {
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+  }
+  .site-post-pagination {
+    text-align: center;
+    padding-bottom: 1rem;
+  }
+  .site-main-skeleton {
+    &.ant-skeleton-active {
+      padding: 3rem;
+    }
+  }
+}
+</style>

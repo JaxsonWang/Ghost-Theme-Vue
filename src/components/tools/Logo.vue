@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import theme from '@/theme.config'
 export default {
   name: 'Logo',
   components: {
@@ -15,7 +16,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: 'Ant Design Pro',
+      default: theme.blogTitle,
       required: false
     },
     showTitle: {

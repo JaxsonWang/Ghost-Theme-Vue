@@ -15,6 +15,7 @@ import bootstrap from '@/core/bootstrap'
 import '@/initApp'
 import '@/icons'
 import '@/registerServiceWorker'
+import '@/directive/highlight'
 
 Vue.use(VueMeta, {
   keyName: 'metaInfo',

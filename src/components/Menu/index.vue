@@ -6,7 +6,7 @@
     @select="selectMenu"
   >
     <a-menu-item v-for="item in menuList" :key="item.url">
-      <router-link :to="item.url">{{ item.label }}</router-link>
+      <router-link :to="urlJudge(item.url)">{{ item.label }}</router-link>
     </a-menu-item>
   </a-menu>
 </template>
@@ -15,6 +15,7 @@
 
 import {Menu} from 'ant-design-vue'
 import {mapActions} from 'vuex'
+import {isTagLink} from '@/utils/validate'
 
 export default {
   name: 'Menu',
@@ -68,6 +69,9 @@ export default {
     ...mapActions(['CloseSidebar']),
     selectMenu(item) {
       this.$emit('select', item)
+    },
+    urlJudge(url) {
+      return isTagLink(url) ? url : `${url}?isPage=true`
     }
   }
 }

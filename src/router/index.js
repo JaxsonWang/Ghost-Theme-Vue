@@ -47,18 +47,6 @@ const routes = [
         title: '详细页'
       }
     }]
-  },
-  {
-    path: '/about/',
-    component: Layout,
-    children: [{
-      path: '',
-      name: 'About',
-      component: () => import('@/views/About'),
-      meta: {
-        title: '关于我'
-      }
-    }]
   }
 ]
 

@@ -28,14 +28,12 @@
         @toggle="toggle"
       />
       <!-- layout content -->
-      <a-layout-content
-        :style="{ paddingTop: '64px' }"
-      >
+      <a-layout-content :class="['site-warp', device]">
         <transition name="page-transition">
           <app-main />
         </transition>
       </a-layout-content>
-      <a-layout-footer />
+      <global-footer />
     </a-layout>
   </a-layout>
 </template>
@@ -45,6 +43,7 @@ import {mapActions} from 'vuex'
 import {Layout, Drawer} from 'ant-design-vue'
 import {mixin, mixinDevice} from '@/utils/mixin'
 import GlobalHeader from '@/components/GlobalHeader'
+import GlobalFooter from '@/components/GlobalFooter'
 import SideMenu from '@/components/Menu/SideMenu'
 import {AppMain} from '@/layout/components'
 
@@ -56,8 +55,8 @@ export default {
     'a-layout': Layout,
     'a-drawer': Drawer,
     'a-layout-content': Layout.Content,
-    'a-layout-footer': Layout.Footer,
     GlobalHeader,
+    GlobalFooter,
     AppMain,
     SideMenu
   },
@@ -89,6 +88,12 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.site-warp {
+  padding-top: 128px;
+  &.mobile {
+    padding-top: 84px;
+  }
+}
 /*
  * The following styles are auto-applied to elements with
  * transition="page-transition" when their visibility is toggled

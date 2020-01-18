@@ -4,12 +4,6 @@ export function timeFix() {
   return hour < 9 ? '早上好' : hour <= 11 ? '上午好' : hour <= 13 ? '中午好' : hour < 20 ? '下午好' : '晚上好'
 }
 
-export function welcome() {
-  const arr = ['休息一会儿吧', '准备吃什么呢?', '要不要打一把 DOTA', '我猜你可能累了']
-  const index = Math.floor(Math.random() * arr.length)
-  return arr[index]
-}
-
 /**
  * 触发 window.resize
  */
@@ -20,48 +14,90 @@ export function triggerWindowResizeEvent() {
   window.dispatchEvent(event)
 }
 
-export function handleScrollHeader(callback) {
-  let timer = 0
-
-  let beforeScrollTop = window.pageYOffset
-  callback = callback || function() {}
-  window.addEventListener(
-    'scroll',
-    event => {
-      clearTimeout(timer)
-      timer = setTimeout(() => {
-        let direction = 'up'
-        const afterScrollTop = window.pageYOffset
-        const delta = afterScrollTop - beforeScrollTop
-        if (delta === 0) {
-          return false
-        }
-        direction = delta > 0 ? 'down' : 'up'
-        callback(direction)
-        beforeScrollTop = afterScrollTop
-      }, 50)
-    },
-    false
-  )
-}
-
-export function isIE() {
-  const bw = window.navigator.userAgent
-  const compare = (s) => bw.indexOf(s) >= 0
-  const ie11 = (() => 'ActiveXObject' in window)()
-  return compare('MSIE') || ie11
+/**
+ * Parse the time to string
+ * @param {(Object|string|number)} time
+ * @param {string} cFormat
+ * @returns {string}
+ */
+export function parseTime(time, cFormat) {
+  if (arguments.length === 0) {
+    return null
+  }
+  const format = cFormat || '{y}-{m}-{d} {h}:{i}:{s}'
+  let date
+  if (typeof time === 'object') {
+    date = time
+  } else {
+    if ((typeof time === 'string') && (/^[0-9]+$/.test(time))) {
+      time = parseInt(time)
+    }
+    if ((typeof time === 'number') && (time.toString().length === 10)) {
+      time = time * 1000
+    }
+    date = new Date(time)
+  }
+  const formatObj = {
+    y: date.getFullYear(),
+    m: date.getMonth() + 1,
+    d: date.getDate(),
+    h: date.getHours(),
+    i: date.getMinutes(),
+    s: date.getSeconds(),
+    a: date.getDay()
+  }
+  return format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
+    let value = formatObj[key]
+    // Note: getDay() returns 0 on Sunday
+    if (key === 'a') {
+      return ['日', '一', '二', '三', '四', '五', '六'][value]
+    }
+    if (result.length > 0 && value < 10) {
+      value = '0' + value
+    }
+    return value || 0
+  })
 }
 
 /**
- * Remove loading animate
- * @param id parent element id or class
- * @param timeout
+ * @param {number} time
+ * @param {string} option
+ * @returns {string}
  */
-export function removeLoadingAnimate(id = '', timeout = 1500) {
-  if (id === '') {
-    return
+export function formatTime(time, option) {
+  if (('' + time).length === 10) {
+    time = parseInt(time) * 1000
+  } else {
+    time = +time
   }
-  setTimeout(() => {
-    document.body.removeChild(document.getElementById(id))
-  }, timeout)
+  const d = new Date(time)
+  const now = Date.now()
+
+  const diff = (now - d) / 1000
+
+  if (diff < 30) {
+    return '刚刚'
+  } else if (diff < 3600) {
+    // less 1 hour
+    return Math.ceil(diff / 60) + '分钟前'
+  } else if (diff < 3600 * 24) {
+    return Math.ceil(diff / 3600) + '小时前'
+  } else if (diff < 3600 * 24 * 2) {
+    return '1天前'
+  }
+  if (option) {
+    return parseTime(time, option)
+  } else {
+    return (
+      d.getMonth() +
+      1 +
+      '月' +
+      d.getDate() +
+      '日' +
+      d.getHours() +
+      '时' +
+      d.getMinutes() +
+      '分'
+    )
+  }
 }

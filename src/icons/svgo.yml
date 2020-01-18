@@ -18,5 +18,5 @@ plugins:
 
 - removeAttrs:
     attrs:
-      # - 'fill' 多色图标取消
+      - 'fill' # 多色图标取消
       - 'fill-rule'

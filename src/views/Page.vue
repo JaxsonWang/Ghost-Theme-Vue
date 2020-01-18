@@ -1,14 +1,44 @@
 <template>
-  <div class="Page">
-    <div v-html="pageData.html" />
+  <div class="site-page">
+    <a-skeleton
+      :loading="loading"
+      active
+      :paragraph="{
+        rows: 15
+      }"
+      class="site-home-skeleton"
+    >
+      <article class="site-post-full">
+        <h1 class="site-post-full-title">{{ pageData.title }}</h1>
+        <div class="site-post-full-meta">
+          #{{ formatTime(new Date(pageData.published_at), '{y}年{m}月{d}日') }}
+          <template v-for="item in pageData.authors">
+            #{{ item.name }}
+          </template>
+          <template v-for="item in pageData.tags">
+            #{{ item.name }}
+          </template>
+        </div>
+        <div class="site-post-full-content typo">
+          <section v-highlight v-html="pageData.html" />
+        </div>
+      </article>
+    </a-skeleton>
   </div>
 </template>
 <script>
+import {Skeleton} from 'ant-design-vue'
+import {formatTime} from '@/utils/util'
 import {getPostData, getPageData} from '@/api/ghost/post'
+
 export default {
   name: 'Page',
+  components: {
+    'a-skeleton': Skeleton
+  },
   data() {
     return {
+      loading: true,
       pageData: {
         primary_tag: {
           name: ''
@@ -37,7 +67,7 @@ export default {
   metaInfo() {
     const self = this
     return {
-      title: self.$store.getters.settings.meta_title,
+      title: self.pageData.title + ' - ' + self.$store.getters.settings.title,
       meta: [
         {vmid: 'description', name: 'description', content: self.$store.getters.settings.description},
         {vmid: 'og:site_name', property: 'og:site_name', content: self.$store.getters.settings.title},
@@ -48,7 +78,7 @@ export default {
         {vmid: 'og:image', property: 'og:image', content: self.pageData.og_image},
         {vmid: 'og:image:width', property: 'og:image:width', content: self.pageData.feature_image_width},
         {vmid: 'og:image:height', property: 'og:image:height', content: self.pageData.feature_image_height},
-        {vmid: 'article:tag', property: 'article:tag', content: self.pageData.primary_tag.name},
+        // {vmid: 'article:tag', property: 'article:tag', content: self.pageData.primary_tag.name},
         {vmid: 'article:modified_time', property: 'article:modified_time', content: self.pageData.updated_at},
         {vmid: 'article:published_time', property: 'article:published_time', content: self.pageData.published_at},
         {vmid: 'twitter:card', name: 'twitter:card', content: 'summary_large_image'},
@@ -58,10 +88,10 @@ export default {
         {vmid: 'twitter:image', name: 'twitter:image', content: self.pageData.feature_image},
         {vmid: 'twitter:site', name: 'twitter:site', content: self.$store.getters.settings.twitter},
         {vmid: 'twitter:creator', name: 'twitter:creator', content: self.$store.getters.settings.twitter},
-        {vmid: 'twitter:label1', name: 'twitter:label1', content: 'Written by'},
-        {vmid: 'twitter:label2', name: 'twitter:label2', content: 'Filed under'},
-        {vmid: 'twitter:data1', name: 'twitter:data1', content: self.pageData.primary_author.name},
-        {vmid: 'twitter:data2', name: 'twitter:data2', content: self.pageData.primary_tag.name},
+        // {vmid: 'twitter:label1', name: 'twitter:label1', content: 'Written by'},
+        // {vmid: 'twitter:label2', name: 'twitter:label2', content: 'Filed under'},
+        // {vmid: 'twitter:data1', name: 'twitter:data1', content: self.pageData.primary_author.name},
+        // {vmid: 'twitter:data2', name: 'twitter:data2', content: self.pageData.primary_tag.name},
         {vmid: 'apple-mobile-web-app-title', name: 'apple-mobile-web-app-title', content: self.$store.getters.settings.meta_title}
       ]
     }
@@ -70,18 +100,45 @@ export default {
     this.getData()
   },
   methods: {
+    formatTime,
     getData() {
       const self = this
+      self.loading = true
       if (self.$route.query.isPage) {
         getPageData(self.$route.params.page).then(response => {
           self.pageData = response.pages[0]
+          self.loading = false
         })
       } else {
         getPostData(self.$route.params.page).then(response => {
+          console.log(response)
           self.pageData = response.posts[0]
+          self.loading = false
         })
       }
     }
   }
 }
 </script>
+<style lang="less" scoped>
+.site-page {
+  background-color: #fff;
+  .site-home-skeleton {
+    &.ant-skeleton-active {
+      padding: 3rem;
+    }
+  }
+  .site-post-full {
+    padding: 3rem 2rem;
+    &-title {
+      font-size: 1.75rem;
+      text-align: center;
+    }
+    &-meta {
+      font-size: 0.75rem;
+      text-align: center;
+    }
+  }
+}
+</style>
+
